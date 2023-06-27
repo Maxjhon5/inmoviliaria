@@ -1,0 +1,63 @@
+body{
+    background: #171f27;
+}
+
+.tituloFomulario{
+    font-weight: bold;
+    color: white;
+}
+
+.subtitulo{
+    font-weight: bold;
+    color: white;
+}
+
+.boton{
+    display: flex;
+    width: 50%;
+    text-decoration: none;
+    color: white;
+    background: #eb8f32;
+    padding: 1%;
+    border-radius: 8px;
+    margin: 0% 1%;
+    justify-content: center;
+}
+
+.boton:hover{
+  background: #fa841a;
+  color: white;
+}
+
+.error-message{
+    color: red;
+}
+
+.contenedor{
+    background: #b5b5bd;
+    margin-top: 1%;
+}
+
+.navbar{
+    background: #e1e3e7;
+}
+
+.navbar a {
+    color: black;
+}
+
+table{
+    width: 100%;
+}
+th{
+    padding: 0px 8px;
+}
+
+td{
+    padding: 0px 8px;
+}
+
+.btnTransaccion{
+    padding: 0% 0%;
+    margin: 10px;
+}
