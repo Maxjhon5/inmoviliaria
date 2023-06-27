@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Requerimiento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequerimientoController extends Controller
 {
@@ -45,15 +46,17 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('requerimiento/show/')->with('mensaje','Se realizao el registro correctamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Requerimiento $requerimiento)
+    public function show()
     {
-        //
+        $casas = DB::table('casa')->get();
+
+        return view('requerimiento.show',compact('casas'));
     }
 
     /**

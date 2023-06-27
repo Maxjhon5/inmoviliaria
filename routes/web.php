@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::get('requerimiento/create', [RequerimientoController::class,'create']);
 Route::post('requerimiento/create',  [RequerimientoController::class, 'store']);
+Route::get('requerimiento/show', [RequerimientoController::class,'show']);
