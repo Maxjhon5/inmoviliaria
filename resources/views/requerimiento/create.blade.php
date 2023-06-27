@@ -27,39 +27,11 @@
                 </div>
             @endif
 
-            @if (Session::has('mensajeErrorEdad'))
-                <div class="alert alert-warning alert-dismissible col-8 d-flex justify-content-center mt-3 mx-auto pt-2 pb-2">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <h4><strong>{{$noVadido}}</strong>{{" "}}{{Session::get('mensajeErrorEdad')}}</h4>
-                </div>
-            @endif
-
-            @if (Session::has('mensajeErrorCategoria'))
-                <div class="alert alert-warning alert-dismissible col-8 d-flex justify-content-center mt-3 mx-auto pt-2 pb-2">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <h4><strong>{{$noVadido}}</strong>{{" "}}{{Session::get('mensajeErrorCategoria')}}</h4>
-                </div>
-            @endif
-
-            @if (Session::has('mensajeErrorExiste'))
-                <div class="alert alert-warning alert-dismissible col-8 d-flex justify-content-center mt-3 mx-auto pt-2 pb-2">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <h4><strong>{{$noVadido}}</strong>{{" "}}{{Session::get('mensajeErrorExiste')}}</h4>
-                </div>
-            @endif
-
-            @if (Session::has('mensajeErrorCamiseta'))
-                <div class="alert alert-warning alert-dismissible col-8 d-flex justify-content-center mt-3 mx-auto pt-2 pb-2">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <h4><strong>{{$noVadido}}</strong>{{" "}}{{Session::get('mensajeErrorCamiseta')}}</h4>
-                </div>
-            @endif
-
             <div class="col-7 p-4 mx-auto contenedorForm" >
                 <form action="{{ url('/requerimiento/create/')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="d-flex justify-content-center mb-4 border-bottom">
-                        <h1 class="tituloFomulario">INSCRIPCION DE JUGADOR</h1>
+                        <h3 class="tituloFomulario">DATOS DEL CLIENTE</h3>
                     </div>
                     <div class="row">
                         <div class="col-4" id="columna1">
@@ -131,6 +103,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="d-flex justify-content-center mb-4 border-bottom">
+                        <h3 class="tituloFomulario">DATOS DEL EMPLEADO</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-4" id="columna1">
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" placeholder="Ingresar nombre" id="nombre" name="nombre" value="{{ old('nombre') }}">
+                                @error('nombre')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">CI:</label>
+                                <input type="text" class="form-control" placeholder="Ingrese su CI" id="ci" name="ci" value="{{ old('ci') }}">
+                                @error('ci')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            @php
+                                date_default_timezone_set('America/La_Paz');
+                                $fechaActual = date('Y-m-d');
+                                $anio = date('Y')-100;
+                                $fecha = $anio."-01-01"
+                            @endphp
+                            <div class="form-group mb-3 contFecha">
+                                <label for="" class="form-label">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" placeholder="Ingrese su fecha" id="fechaNacimiento" name="fechaNacimiento"
+                                    value="{{ old('fechaNacimiento') }}" min="{{$fecha}}" max="{{$fechaActual}}">
+                                @error('fechaNacimiento')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                        </div>
+                        <div class="col-4" id="columna2">
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">Apellido Paterno:</label>
+                                <input type="text" class="form-control" placeholder="Ingresar apellido paterno" id="apellidoPaterno" name="apellidoPaterno" value="{{ old('apellidoPaterno') }}">
+                                @error('apellidoPaterno')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="" class="form-label">Telefono:</label>
+                                <input type="text" class="form-control" placeholder="Ingrese su telefono" id="telefono" name="telefono" value="{{ old('telefono') }}">
+                                @error('telefono')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-4" id="columna3">
+                            <div class="form-group mb-3 ">
+                                <label for="" class="form-label">Apellido Materno:</label>
+                                <input type="text" class="form-control" placeholder="Ingresar apellido materno" id="apellidoMaterno" name="apellidoMaterno" value="{{ old('apellidoMaterno') }}">
+                                @error('apellidoMaterno')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3 ">
+                                <label for="" class="form-label">Direccion:</label>
+                                <input type="text" class="form-control" placeholder="Ingresar direccion" id="Direccion" name="Direccion" value="{{ old('Direccion') }}">
+                                @error('Direccion')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="d-flex justify-content-center mb-4 border-bottom">
                         <h3 class="tituloFomulario">REQUERIMIENTOS</h3>
