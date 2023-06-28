@@ -46,7 +46,97 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect('requerimiento/show/')->with('mensaje','Se realizao el registro correctamente');
+        date_default_timezone_set('America/La_Paz');
+        $fechaActual = date('Y-m-d');
+        $anio = date('Y')-100;
+        $fecha = $anio."-01-01";
+
+
+        $nombre = $request -> nombreCliente;
+        $apellidoPaterno = $request -> apellidoPaternoCliente;
+        $apellidoMaterno = $request -> apellidoMaternoCliente;
+
+        $cliente = new Cliente;
+        $cliente -> nombrecliente = $nombre+$apellidoPaterno+$apellidoMaterno;
+        $cliente -> cicliente = $request -> ciCliente;
+        $cliente -> direccioncliente = $request -> direccionCliente;
+        $cliente -> save();
+
+        $telefonoCliente = new Telefon_Cliente;
+        $telefonoCliente -> codCliente = $cliente -> codCliente;
+        $telefonoCliente -> telefonoCliente = $request -> telefonoCliente;
+        $telefonoCliente -> save();
+
+        $nombreEmpl = $request -> nombreEmpleado;
+        $apellidoPaternoEmpl = $request -> apellidoPaternoEmpleado;
+        $apellidoMaternoEmpl = $request -> apellidoMaternoEmpleado;
+
+        $empleado = new Empleado;
+        $empleado -> nombreempleado = $nombreEmpl+$apellidoPaternoEmpl+$apellidoMaternoEmpl;
+        $empleado -> ciempleado = $request -> ciEmpleado;
+        $empleado -> telefonoempleado = $request -> ciEmpleado;
+        $empleado -> direccionempleado = $request -> direccionEmpleado;
+        $empleado -> save();
+
+        $contratoRequerimiento = new Contrato_Requerimiento;
+        $contratoRequerimiento -> codCliente = $cliente -> codCliente;
+        $contratoRequerimiento -> codEmpleado = $empleado -> codEmpleado;
+        $contratoRequerimiento -> fechaContratoRequerimiento = new \DateTime();
+        $contratoRequerimiento -> save();
+
+        //IMUEBLE
+        $casa = $request->has('casa');
+        $departamento = $request->has('departamento');
+        $cuarto = $request->has('cuarto');
+        $garzonier = $request->has('garzonier');
+        $lote = $request->has('lote');
+
+        //TIPO DE CONTRATO
+        $alquiler = $request->has('alquiler');
+        $anticretico = $request->has('anticretico');
+        $venta = $request->has('venta');
+
+        if($casa){
+            $consulta = DB::table('casa')
+                            ->select('codcasa','superficieinmueble','numerohabitacion','garajecasa','numerobanios','numerococina','numerosala','numerodepisos',
+                            'parrilero','piscina','patio','fechaconstruccion','superficieconstruccion',)
+                            ->join('contrato','contrato.codcontrato','=','casa.codcontrato')
+                            ->where('superficieinmueble',$request -> superficieCasa)
+                            ->where('numerohabitacion',$request -> numeroHabitacionCasa)
+                            ->where('garajecasa',$request -> garajeCasa)
+                            ->where('numerobanios',$request -> numeroBanioCasa)
+                            ->where('numerococina',$request -> numeroCocinaCasa)
+                            ->where('numerosala',$request -> numeroSalaCasa)
+                            ->where('numerodepisos',$request -> numeroPisosCasa)
+                            ->where('parrilero',$request -> parrilleroCasa)
+                            ->where('piscina',$request -> piscinaCasa)
+                            ->where('patio',$request -> patioCasa)
+                            ->where('fechaconstruccion',$request -> fechaConstruccionCasa)
+                            ->where('superficieconstruccion',$request -> superficieConstruccionCasa)
+                            ->where('tipocontrato','ALQUILER')
+                            ->get();
+            if($alquiler){
+                $consulta->where('tipocontrato', 'ALQUILER');
+            }
+            if($anticretico){
+                $consulta->where('tipocontrato', 'ANTICRETICO');
+            }
+            if($venta){
+                $consulta->where('tipocontrato', 'VENTA');
+            }
+                            
+        }else if($departamento){
+            
+        }else if($cuarto){
+            
+        }else if($garzonier){
+            
+        }else if($lote){
+            
+        }
+
+        return redirect()->route('requerimiento.show')->with('consulta', $consulta)->with('mensaje', 'Se realizó el registro correctamente');
+
     }
 
     /**
